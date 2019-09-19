@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $('#row-add').on('click', function(){
-        $('#table').prepend(`
+        $('#tbody').append(`
             <tr class="datarow">
                 <td>
                     <input type="text"></input>
@@ -37,8 +37,11 @@ function tableToObject(){
                 servers.push(server);
             }
         }
-    }
-    return servers;
+    } 
+    return {
+        'teste_name' : document.getElementById("teste_name").value,
+        'servers' : servers
+    };
 }
 
 function run(){
