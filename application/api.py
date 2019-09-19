@@ -9,7 +9,6 @@ def index():
 @app.route('/run',methods = ['POST'])
 def run():
     print(request.json)
-    return 'salve quebrada'
 
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 app.run(host='0.0.0.0', debug=True) 
