@@ -1,7 +1,7 @@
 $(document).ready(function(){
     $('#row-add').on('click', function(){
         $('#table').prepend(`
-            <tr>
+            <tr class="datarow">
                 <td>
                     <input type="text"></input>
                 </td>
@@ -9,14 +9,57 @@ $(document).ready(function(){
                     <input type="text"></input>
                 </td>
                 <td>
-                    <a onclick="remover(this)" class="btn btn-danger"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/></svg></a>
+                    <input type="text"></input>
+                </td>
+                <td>
+                    <a onclick="remover(this)" class="btn btn btn-danger" style="color: white; font-weight: bold;">X</a>
                 </tr>
             </tr>`);
     });
 });
+
+function tableToObject(){
+    var servers = [];
+    var server = {};
+    var oTable = document.getElementById('table');
+    for (i = 0; i < oTable.rows.length; i++){
+        if(oTable.rows.item(i).className == "datarow"){
+            var oCells = oTable.rows.item(i).cells;
+            firstcol = oCells.item(0).children
+            secondcol = oCells.item(1).children
+            thicol = oCells.item(2).children
+            if(firstcol[0] instanceof HTMLInputElement){
+                server = {
+                    'hostname' : firstcol[0].value,
+                    'ip' : secondcol[0].value,
+                    'passwd' : thicol[0].value
+                };
+                servers.push(server);
+            }
+        }
+    }
+    return servers;
+}
+
+function run(){
+    servers = tableToObject();
+    console.log(servers);
+    $.ajax({
+        type: 'POST',
+        url: `run`,
+        contentType: 'application/json',
+        data: JSON.stringify(servers),
+        success: function (data) {
+            console.log(data);
+        },
+        error: function () {
+        }
+    });
+}
+
 function remover(btn){
     var table = document.getElementById("table");
-    var rows = table.getElementsByTagName("tr");
+    var rows = table.getElementsByClassName("datarow");
     if (rows.length > 3){
         btn.closest('tr').remove();
     }
