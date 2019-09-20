@@ -1,11 +1,20 @@
 class Server(object):
     def __init__(self):
+        self._id = None
         self._ip = None
         self._hostname = None
         self._rootpass = None
         self._ssh = None
-        self._message = None
+        self._code = 999
         self._rhelversion = None
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
 
     @property
     def rhelversion(self):
@@ -16,12 +25,12 @@ class Server(object):
         self._rhelversion = rhelversion
 
     @property
-    def message(self):
-        return self._message
+    def code(self):
+        return self._code
 
-    @message.setter
-    def message(self, message):
-        self._message = message
+    @code.setter
+    def code(self, code):
+        self._code = code
 
     @property
     def ssh(self):

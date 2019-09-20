@@ -19,17 +19,20 @@ $(document).ready(function(){
 });
 
 function tableToObject(){
+    var id = 0;
     var servers = [];
     var server = {};
     var oTable = document.getElementById('table');
     for (i = 0; i < oTable.rows.length; i++){
         if(oTable.rows.item(i).className == "datarow"){
+            id++;
             var oCells = oTable.rows.item(i).cells;
             firstcol = oCells.item(0).children
             secondcol = oCells.item(1).children
             thicol = oCells.item(2).children
             if(firstcol[0] instanceof HTMLInputElement){
                 server = {
+                    'id' : id,
                     'hostname' : firstcol[0].value,
                     'ip' : secondcol[0].value,
                     'passwd' : thicol[0].value
