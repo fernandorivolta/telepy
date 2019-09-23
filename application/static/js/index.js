@@ -18,6 +18,48 @@ $(document).ready(function(){
     });
 });
 
+function templateTable(tableData) {
+    var template = '';
+    $.each(tableData.servers, function(index, value) {
+        template += `<tr class="datarow passo1">
+            <td>
+                ChkHosts
+            </td>
+            <td>
+                ${value.hostname}
+            </td>
+            <td>
+                ${value.ip}
+            </td>
+            <td>
+                ${value.passwd}
+            </td>
+            <td id='data-id-${value.id}'>
+                <img src='blob:https://loading.io/416ea189-363e-495f-bb86-f43d9862f7ad' />
+            </td>
+        </tr>`;
+    });
+    return `<table id="table" class="table text-center table-curved">
+        <thead>
+        <tr>
+            <th colspan='5'>${tableData.teste_name}</th>
+        </tr>
+        <tr>
+            <th scope="col">passo</th>
+            <th scope="col">hostname</th>
+            <th scope="col">ip</th>
+            <th scope="col">senha (root)</th>
+            <th scope="col">descricao</th>
+        </tr>
+        </thead>
+        <tbody id="resultTable">
+            ${template}
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>`;
+}
+
 function tableToObject(){
     //array de servers
     var servers = [];
@@ -53,8 +95,22 @@ function run(){
         url: `check_server_info`,
         contentType: 'application/json',
         data: JSON.stringify(servers),
+        beforeSend: function() {
+            $('#result').append(templateTable(servers));
+        },
         success: function (data) {
             start_install(data);
+            let tableAjaxChange = document.querySelector('#resultTable');
+            for (i = 0; i < tableAjaxChange.rows.length; i++) {
+                for (idx = 0; idx < data.length; idx++) {
+                    let compareId = `data-id-${data[idx].id}`;
+                    if (tableAjaxChange.rows.item(i).lastElementChild.id == compareId) {
+                        tdac = tableAjaxChange.rows.item(i).lastElementChild;
+                        tdac.innerHTML = data[idx].message;
+                    };
+                }
+            }
+            //console.log(data);
         },
         error: function () {
         }
