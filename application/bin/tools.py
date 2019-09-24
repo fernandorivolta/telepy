@@ -1,17 +1,17 @@
 import paramiko
 class Tools():
     #criacao do objeto ssh (criacao da conexao com servidor), retorna ssh se possivel, 0 com erro e seta o server.code
-    #usa o createftp como 0 por padrao, só criando a conexao ftp quando a flag vier 1
-    def create_ssh(self, server, createftp = 0):
+    #usa o createftp como 0 por padrao, só criando a conexao sftp quando a flag vier 1
+    def create_ssh(self, server, createsftp = 0):
         try:
             ssh = paramiko.SSHClient()
             ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())        
             ssh.connect(server.ip, username = 'root', password = server.rootpass, timeout = 1)
             server.code='001'
             server.ssh=True
-            if createftp == 1:
-                ftp = ssh.open_sftp()
-                return ssh, ftp
+            if createsftp == 1:
+                sftp = ssh.open_sftp()
+                return ssh, sftp
             return ssh
         except (paramiko.SSHException, IOError) as e:
             #exception de senha invalida
@@ -34,5 +34,9 @@ class Tools():
             return "Senha invalida"
         elif(code=='010'):
             return "Versao de rhel nao suportada pelo telegraf"
+        elif(code=='020'):
+            return "Telegraf instalado"
+        elif(code=='021'):
+            return "Telegraf nao instalado"
         elif(code=='999'):
             return "OK"

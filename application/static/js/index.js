@@ -99,6 +99,7 @@ function run(){
             $('#result').append(templateTable(servers));
         },
         success: function (data) {
+            console.log(data);
             start_install(data);
             let tableAjaxChange = document.querySelector('#resultTable');
             for (i = 0; i < tableAjaxChange.rows.length; i++) {

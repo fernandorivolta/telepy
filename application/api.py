@@ -3,6 +3,7 @@ from datetime import datetime
 from bin.Server import Server
 from bin.tools import Tools
 from bin.check_server_info import CheckServerInfo
+from bin.start_install import Install
 import jsonpickle
 
 check=CheckServerInfo()
@@ -35,14 +36,18 @@ def check_server_info():
 
 @app.route('/start_install', methods = ['POST'])
 def start_install():
+    install = Install()
     #recebe o json e transforma em objetos python
     servers = jsonpickle.decode(request.json)
-    for server in servers:
-        #se o ssh ja foi criado antes e a flag esta True
-        if server.ssh:
-            #com a flag 1 retorna o ftp junto
-            ssh, ftp = tools.create_ssh(server, 1)
-                
+    for index, server in enumerate(servers):
+        #se o ssh ja foi criado antes e a flag esta True e o server code nao for 010 (server com rhel nao suportado pelo telegraf)
+        if server.ssh and server.code != "010":
+            #com a flag 1 retorna o sftp junto
+            ssh, sftp = tools.create_ssh(server, 1)
+            install.install_telegraf(sftp, ssh, server)    
+        else:
+            server.code='021'
+            server.message='Telegraf nao instalado'    
 
     return jsonify(jsonpickle.encode(servers))
 
