@@ -40,6 +40,8 @@ class Tools():
             return "Telegraf instalado"
         elif(code=='021'):
             return "Telegraf nao instalado corretamente"
+        elif(code=='022'):
+            return "Telegraf nao instalado"
         elif(code=='999'):
             return "OK"
 

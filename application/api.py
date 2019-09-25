@@ -16,16 +16,16 @@ def index():
 def check_server_info():
     response = []
     servers = []
-    name_test = request.json['teste_name']
     hostList = request.json['servers']
     serverList = []
     for host in hostList:
         server = Server()
-        server.hostname = host['hostname']+"_"+name_test
-        server.ip = host['ip']
-        server.rootpass = host['passwd']
+        server.hostname = host['_hostname']
+        server.ip = host['_ip']
+        server.rootpass = host['_passwd']
         server.rhelversion = tools.verify_rhel_version(server, tools.create_ssh(server))
         server.message = tools.return_code(server.code)
+        server.id = host['_id']
         serverList.append(server)
         servers.append(server)
 
@@ -45,7 +45,7 @@ def start_install():
             install.install_telegraf(sftp, ssh, server)  
             install.configure_telegraf(ssh, server)  
         else:
-            server.code='021'
+            server.code='022'
             server.message=tools.return_code(server.code) 
 
     return jsonify(jsonpickle.encode(servers))

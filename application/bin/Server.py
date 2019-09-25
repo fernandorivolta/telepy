@@ -7,7 +7,16 @@ class Server(object):
         self._code = 999
         self._rhelversion = None
         self._message = None
+        self._id = None
            
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, id):
+        self._id = id
+
     @property
     def message(self):
         return self._message

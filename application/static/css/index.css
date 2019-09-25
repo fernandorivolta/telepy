@@ -11,3 +11,24 @@ input:focus{
 table{
     border: 1px solid #dee2e6;
 }
+
+.loader {
+    border: 6px solid #b3b0b0; /* Light grey */
+    border-radius: 50%;
+    border-top: 6px solid #162b38;
+    width: 24px;
+    height: 24px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

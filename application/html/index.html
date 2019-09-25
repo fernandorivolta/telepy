@@ -20,7 +20,8 @@
             <div class="col-md-12">
                 <h2 class="text-center" style="margin-bottom: 40px;">tele.py</h2>
                 </div>
-                    <div class="col col-md-8 offset-md-2 text-center">
+                    <div class="col col-md-10 offset-md-1 text-center">
+                        <main>
                         <p>Nome do Teste <input type="text" id="teste_name" placeholder=" Ex: REP_JAVA"></input></p>
                         <table id="table" class="table text-center table-curved">
                             <thead>
@@ -37,10 +38,10 @@
                                         <input type="text"></input>
                                     </td>
                                     <td>
-                                        <input type="text"></input>
+                                        <input type="text" value="172.22.6.11"></input>
                                     </td>
                                     <td>
-                                        <input type="text"></input>
+                                        <input type="text" value="132131"></input>
                                     </td>
                                     <td>
                                         <a onclick="remover(this)" class="btn btn-danger" style="color: white; font-weight: bold;">X</a>
@@ -55,13 +56,15 @@
                         </table>
                         <div class="row">
                             <div class="col-md-12 text-right">
-                                <a onclick="run()" class="btn btn-success" style="color: white;">Create</a>
+                                <a onclick="check_server_info()" class="btn btn-success" style="color: white;">Create</a>
                             </div>
                         </div>
                     </div>
+                    </main>
+                    <!-- 
                     <div class="col col-md-8 offset-md-2 text-center" id="result">
 
-                    </div>
+                    </div> -->
             </div>
         </div>
     </div>
