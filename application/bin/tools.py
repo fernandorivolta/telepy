@@ -34,9 +34,28 @@ class Tools():
             return "Senha invalida"
         elif(code=='010'):
             return "Versao de rhel nao suportada pelo telegraf"
+        elif(code=='011'):
+            return "Versao do SO nao compativel com telegraf"
         elif(code=='020'):
             return "Telegraf instalado"
         elif(code=='021'):
-            return "Telegraf nao instalado"
+            return "Telegraf nao instalado corretamente"
         elif(code=='999'):
             return "OK"
+
+    #recebe um objeto server, verifica a versao do rhel
+    def verify_rhel_version(self, server, ssh):
+        if ssh != 0:
+            rhelversion = ssh.exec_command("cat /etc/redhat-release | sed 's/[a-Z]//g' | sed 's/()//g' | xargs")[1].readlines()
+            if rhelversion[0].strip('\n') != "":
+                if (float(rhelversion[0].strip('\n')) >= 6):
+                    return float(rhelversion[0].strip('\n'))
+                else:
+                    server.code='010'
+                    return float(rhelversion[0].strip('\n'))
+            else:
+                server.code='011'
+                server.message=self.return_code(server.code)
+                return 0
+        else:
+            return 0
