@@ -18,18 +18,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h2 class="text-center" style="margin-bottom: 40px;">tele.py</h2>
+                <h2 id="title" class="text-center" style="margin-bottom: 40px;">tele.py</h2>
+                <div class="text-center">
+                    <h4 id="feedback" style="display:none; padding-bottom: 15px; color:#dc3545;">Preencha todos os campos!</h4 style="display:none">
+                </div>
                 </div>
                     <div class="col col-md-10 offset-md-1 text-center">
                         <main>
                         <p>Nome do Teste <input type="text" id="teste_name" placeholder=" Ex: REP_JAVA"></input></p>
-                        <table id="table" class="table text-center table-curved">
+                        <table id="table" class="table table-dark text-center">
                             <thead>
                             <tr>
-                                <th scope="col">hostname</th>
-                                <th scope="col">ip</th>
-                                <th scope="col">senha (root)</th>
-                                <th scope="col">remover</th>
+                                <th scope="col">HOSTNAME</th>
+                                <th scope="col">IP</th>
+                                <th scope="col">ROOT PASSWORD</th>
+                                <th scope="col">REMOVE</th>
                             </tr>
                             </thead>
                             <tbody id="tbody">
@@ -38,10 +41,10 @@
                                         <input type="text"></input>
                                     </td>
                                     <td>
-                                        <input type="text" value="172.22.6.11"></input>
+                                        <input type="text"></input>
                                     </td>
                                     <td>
-                                        <input type="text" value="132131"></input>
+                                        <input type="text"></input>
                                     </td>
                                     <td>
                                         <a onclick="remover(this)" class="btn btn-danger" style="color: white; font-weight: bold;">X</a>
@@ -55,8 +58,10 @@
                             </tfoot>
                         </table>
                         <div class="row">
-                            <div class="col-md-12 text-right">
-                                <a onclick="check_server_info()" class="btn btn-success" style="color: white;">Create</a>
+                            <div class="col-md-12">
+                                <div class="text-right">
+                                    <a onclick="check_server_info()" class="btn btn-success" style="color: white;">Create</a>
+                                </div>
                             </div>
                         </div>
                     </div>

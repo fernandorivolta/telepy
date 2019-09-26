@@ -4,6 +4,7 @@ from bin.Server import Server
 from bin.tools import Tools
 from bin.start_install import Install
 import jsonpickle
+import time
 
 tools = Tools()
 
@@ -20,7 +21,7 @@ def check_server_info():
     serverList = []
     for host in hostList:
         server = Server()
-        server.hostname = host['_hostname']
+        server.hostname = host['_hostname'].upper()
         server.ip = host['_ip']
         server.rootpass = host['_passwd']
         server.rhelversion = tools.verify_rhel_version(server, tools.create_ssh(server))
@@ -49,5 +50,18 @@ def start_install():
             server.message=tools.return_code(server.code) 
 
     return jsonify(jsonpickle.encode(servers))
+
+""" @app.route('/check_grafana_data', methods = ['POST'])
+def check_grafana_data():
+    install = Install()
+    #recebe o json e transforma em objetos python
+    servers = jsonpickle.decode(request.json)
+    time.sleep(15)
+    for server in servers:
+        install.validate_grafana_data(server)
+
+    return jsonify(jsonpickle.encode(servers)) """
+    
+
 
 app.run(host='0.0.0.0', debug=True) 

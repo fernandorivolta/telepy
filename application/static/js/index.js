@@ -18,7 +18,9 @@ $(document).ready(function(){
     });
 });
 
-var error_codes = ['002', '003', '010', '011', '021', '022'];
+var error_codes = ['002', '003', '004', '010', '011', '021', '022', '031'];
+var request="";
+
 
 function tableToObject(){
     //array de servers
@@ -55,54 +57,64 @@ function end_test(){
 }
 
 function check_server_info(){
-    servers = tableToObject();
-    $.ajax({
-        type: 'POST',
-        url: `check_server_info`,
-        contentType: 'application/json',
-        data: JSON.stringify({'servers' : servers}),
-        beforeSend: function() {
-            testename = $('#teste_name')[0].value;
-            $('main').html('');
-            $('main').html(`<table id="table" class="table text-center table-curved">
-            <thead>
-            <tr>
-                <th colspan='5'>${testename}</th>
-            </tr>
-            <tr>
-                <th scope="col">passo</th>
-                <th scope="col">hostname</th>
-                <th scope="col">ip</th>
-                <th scope="col">descricao</th>
-            </tr>
-            </thead>
-            <tbody id="resultTable">
-            </tbody>
-            <tfoot>
-            </tfoot>
-        </table>`);
-        $('#resultTable').append(templateRow(servers, 'ChkHosts'));
-        },
-        success: function (data) {
-            servers = JSON.parse(data);
-            $.each(servers, function (server) {
-                $(`#data-id-ChkHosts-${servers[server]._id}`).html(servers[server]._message);
-                if(error_codes.includes(servers[server]._code)){
-                    servers.pop(server);
+    //funcao q valida todos os campos
+    if($("input").filter(function () {
+        return $.trim($(this).val()).length == 0
+    }).length == 0){
+        $('#feedback').fadeOut();
+        servers = tableToObject();
+        request = $.ajax({
+            type: 'POST',
+            url: `check_server_info`,
+            contentType: 'application/json',
+            data: JSON.stringify({'servers' : servers}),
+            beforeSend: function() {
+                testename = $('#teste_name')[0].value;
+                $('main').html('');
+                $('main').html(`<div class="text-left"><a onclick="stop()" class="btn btn btn-outline-secondary" style="font-weight: bold;">X</a></div><table id="table" class="table table-dark text-center table-curved">
+                <thead>
+                <tr>
+                    <th colspan='5'>${testename}</th>
+                </tr>
+                <tr>
+                    <th scope="col">passo</th>
+                    <th scope="col">hostname</th>
+                    <th scope="col">ip</th>
+                    <th scope="col">descricao</th>
+                </tr>
+                </thead>
+                <tbody id="resultTable">
+                </tbody>
+                <tfoot>
+                </tfoot>
+            </table>`);
+            $('#resultTable').append(templateRow(servers, 'ChkHosts'));
+            },
+            success: function (data) {
+                servers = JSON.parse(data);
+                $.each(servers, function (server) {
+                    $(`#data-id-ChkHosts-${servers[server]._id}`).html(servers[server]._message);
+                    if(error_codes.includes(servers[server]._code)){
+                        servers.pop(server);
+                    }
+                });
+                if(servers.length>0){
+                    start_install(JSON.stringify(servers));
+                }else{
+                    end_test();
                 }
-            });
-            if(servers.length>0){
-                start_install(JSON.stringify(servers));
-            }else{
-                end_test();
+            },
+            error: function () {
             }
-        },
-        error: function () {
-        }
-    });
+        });
+    }else{
+        $('#feedback').fadeOut();
+        $('#feedback').fadeIn();
+    }
 }
 
 function templateRow(data, step) {
+    console.log(data);
     var template = '';
     $.each(data, function(index, value) {
         template += `<tr class="datarow passo1">
@@ -125,7 +137,7 @@ function templateRow(data, step) {
 
 
 function start_install(servers){
-    $.ajax({
+    request = $.ajax({
         type: 'POST',
         url: `start_install`,
         contentType: 'application/json',
@@ -141,7 +153,7 @@ function start_install(servers){
                     servers.pop(server);
                 }
                 if(servers.length>0){
-                    alert('Success');
+                    alert("Sucess")
                 }else{
                     end_test();
                 }
@@ -150,6 +162,41 @@ function start_install(servers){
         error: function () {
         }
     });
+}
+/* 
+function check_grafana_data(servers){
+    $.ajax({
+    type: 'POST',
+    url: `check_grafana_data`,
+    contentType: 'application/json',
+    data: JSON.stringify(servers),
+    beforeSend: function(){
+        $('#resultTable').append(templateRow(JSON.parse(servers), 'ValidateGrfData'));
+    },
+    success: function (data) {
+        servers = JSON.parse(data);
+        $.each(servers, function (server) {
+            $(`#data-id-ValidateGrfData-${servers[server]._id}`).html(servers[server]._message);
+            if(error_codes.includes(servers[server]._code)){
+                servers.pop(server);
+            }
+            if(servers.length>0){
+                alert("Sucess");
+            }else{
+                end_test();
+            }
+        });
+    },
+    error: function () {
+    }
+}); 
+
+}
+*/
+
+function stop(){
+    request.abort();
+    window.parent.location.reload();
 }
 
 function remover(btn){

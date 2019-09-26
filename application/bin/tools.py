@@ -32,6 +32,8 @@ class Tools():
             return "Conexao nao estabelecida"
         elif(code=='003'):
             return "Senha invalida"
+        elif(code=='004'):
+            return "Erro na transferencia de arquivos"
         elif(code=='010'):
             return "Versao de rhel nao suportada pelo telegraf"
         elif(code=='011'):
@@ -42,6 +44,10 @@ class Tools():
             return "Telegraf nao instalado corretamente"
         elif(code=='022'):
             return "Telegraf nao instalado"
+        elif(code=='030'):
+            return "Dados no grafana"
+        elif(code=='031'):
+            return "Dados ainda nao estao no grafana"
         elif(code=='999'):
             return "OK"
 
