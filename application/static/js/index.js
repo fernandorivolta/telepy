@@ -12,7 +12,7 @@ $(document).ready(function(){
                     <input type="text"></input>
                 </td>
                 <td>
-                    <a onclick="remover(this)" class="btn btn btn-danger" style="color: white; font-weight: bold;">X</a>
+                    <a onclick="remover(this)" class="btn btn btn-danger" style="color: white; font-weight: bold;"><i class="fas fa-times"></i></a>
                 </tr>
             </tr>`);
     });
@@ -71,7 +71,9 @@ function check_server_info(){
             beforeSend: function() {
                 testename = $('#teste_name')[0].value;
                 $('main').html('');
-                $('main').html(`<div class="text-left"><a onclick="stop()" class="btn btn btn-outline-secondary" style="font-weight: bold;">X</a></div><table id="table" class="table table-dark text-center table-curved">
+                $('main').html(`
+                <div class="text-left"><span onclick="stop()" style="font-size: 20px; cursor:pointer;" ><i class="fas fa-undo-alt"></i> Voltar</span></div>
+                <table id="table" class="table table-dark text-center table-curved">
                 <thead>
                 <tr>
                     <th colspan='5'>${testename}</th>
@@ -93,9 +95,11 @@ function check_server_info(){
             success: function (data) {
                 servers = JSON.parse(data);
                 $.each(servers, function (server) {
-                    $(`#data-id-ChkHosts-${servers[server]._id}`).html(servers[server]._message);
                     if(error_codes.includes(servers[server]._code)){
+                        $(`#data-id-ChkHosts-${servers[server]._id}`).html(`<i class="fas fa-exclamation-circle"></i> ${servers[server]._message}`);
                         servers.pop(server);
+                    }else{
+                        $(`#data-id-ChkHosts-${servers[server]._id}`).html(`<i class="fas fa-check-circle"></i> ${servers[server]._message}`);
                     }
                 });
                 if(servers.length>0){
@@ -148,9 +152,11 @@ function start_install(servers){
         success: function (data) {
             servers = JSON.parse(data);
             $.each(servers, function (server) {
-                $(`#data-id-StartInstall-${servers[server]._id}`).html(servers[server]._message);
                 if(error_codes.includes(servers[server]._code)){
+                    $(`#data-id-StartInstall-${servers[server]._id}`).html(`<i class="fas fa-exclamation-circle"></i> ${servers[server]._message}`);
                     servers.pop(server);
+                }else{
+                    $(`#data-id-StartInstall-${servers[server]._id}`).html(`<i class="fas fa-check-circle"></i> ${servers[server]._message}`);
                 }
                 if(servers.length>0){
                     alert("Sucess")

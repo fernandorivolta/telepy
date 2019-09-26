@@ -20,6 +20,10 @@ th{
   border-top: unset !important;
 }
 
+i:not(.fa-times){
+  padding-right: 5px;
+}
+
 .loader {
     border: 6px solid #b3b0b0; /* Light grey */
     border-radius: 50%;

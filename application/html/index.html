@@ -12,7 +12,9 @@
     <script src="static/js/bootstrap.min.js?u={{last_updated}}"></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
-    <title>x</title>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.2/css/all.css'
+    integrity='sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr' crossorigin='anonymous'>
+    <title>telepy</title>
 </head>
 <body>
     <div class="container">
@@ -25,7 +27,7 @@
                 </div>
                     <div class="col col-md-10 offset-md-1 text-center">
                         <main>
-                        <p>Nome do Teste <input type="text" id="teste_name" placeholder=" Ex: REP_JAVA"></input></p>
+                        <p><input type="text" id="teste_name" placeholder="Nome do Teste "></input></p>
                         <table id="table" class="table table-dark text-center">
                             <thead>
                             <tr>
@@ -47,13 +49,13 @@
                                         <input type="text"></input>
                                     </td>
                                     <td>
-                                        <a onclick="remover(this)" class="btn btn-danger" style="color: white; font-weight: bold;">X</a>
+                                        <a onclick="remover(this)" class="btn btn-danger"><i class="fas fa-times"></i></a>
                                     </td>
                                 </tr>
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <td colspan="4" id="row-add"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg></td>
+                                    <td colspan="4" id="row-add"><i style="color:white;" class="fas fa-plus"></i></td>
                                 </tr>
                             </tfoot>
                         </table>
