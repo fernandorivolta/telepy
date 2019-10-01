@@ -95,6 +95,7 @@ function check_server_info(){
             success: function (data) {
                 servers = JSON.parse(data);
                 $.each(servers, function (server) {
+                    console.log(server);
                     if(error_codes.includes(servers[server]._code)){
                         $(`#data-id-ChkHosts-${servers[server]._id}`).html(`<i class="fas fa-exclamation-circle"></i> ${servers[server]._message}`);
                         servers.pop(server);
@@ -118,7 +119,6 @@ function check_server_info(){
 }
 
 function templateRow(data, step) {
-    console.log(data);
     var template = '';
     $.each(data, function(index, value) {
         template += `<tr class="datarow passo1">
@@ -159,7 +159,6 @@ function start_install(servers){
                     $(`#data-id-StartInstall-${servers[server]._id}`).html(`<i class="fas fa-check-circle"></i> ${servers[server]._message}`);
                 }
                 if(servers.length>0){
-                    alert("Sucess")
                 }else{
                     end_test();
                 }

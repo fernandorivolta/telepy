@@ -1,6 +1,7 @@
 from bin.tools import Tools
 from influxdb import InfluxDBClient
 import time
+import paramiko
 
 class Install():
     def __init__(self):
